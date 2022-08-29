@@ -34,7 +34,7 @@ class BusinessTypeSeeder extends Seeder
             ],
         ];
         foreach ($data as $key => $value) {
-            BusinessType::created([
+            BusinessType::create([
                 'name' => $value['name'],
                 'code' => $value['code'],
                 'many_minerals' => $value['many_minerals'],

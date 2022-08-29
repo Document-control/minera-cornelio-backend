@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::prefix('clients')->group(function () {
+    Route::get('/business-type',     [ClientController::class, 'getBusinessType']);
+    // Route::post('/create',      [SaleController::class, 'create']);
+    // Route::get('/{id}',         [SaleController::class, 'show']);
+    // Route::put('/update/{id}',  [SaleController::class, 'update']);
+    // Route::patch('/update',     [SaleController::class, 'updateSales']);
+    // Route::delete('/{id}',      [SaleController::class, 'destroy']);
 });

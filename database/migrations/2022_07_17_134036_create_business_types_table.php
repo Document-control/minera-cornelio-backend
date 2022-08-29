@@ -19,8 +19,6 @@ class CreateBusinessTypesTable extends Migration
             $table->string('code');
             $table->boolean('many_minerals')->default(true);
 
-            $table->foreignId('mineral_id')->constrained('minerals');
-
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();
 

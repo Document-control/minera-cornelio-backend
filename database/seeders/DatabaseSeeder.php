@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(KindPersonSeeder::class);
         $this->call(OperationTypeSeeder::class);
         $this->call(BusinessTypeSeeder::class);
+
+        // para los departamentos,
+        $path = base_path() . '/ubigeo2016.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
     }
 }

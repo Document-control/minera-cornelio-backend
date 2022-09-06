@@ -15,15 +15,24 @@ class KindPersonSeeder extends Seeder
     public function run()
     {
         $data = [
-            'OWNER',
-            'CONTACT',
-            'REPRE LEGAL',
-            'MANAGER',
+            [
+                'name' => 'OWNER',
+                'spanish_name' => 'DUEÑO',
+            ],
+            [
+                'name' => 'LEGAL REPRESENTATIVE',
+                'spanish_name' => 'REPRESENTANTE LEGAL',
+            ],
+            [
+                'name' => 'DIRECT CONTACT',
+                'spanish_name' => 'CONTACTO DIRECTO',
+            ],
         ];
 
         foreach ($data as $key => $value) {
-            KindPerson::created([
-                'name' => $value,
+            KindPerson::create([
+                'name' => $value['name'],
+                'spanish_name' => $value['spanish_name'],
                 'created_by' => 1,
                 'updated_by' => 1,
             ]);

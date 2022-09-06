@@ -21,12 +21,19 @@ class Client extends Model
     {
         $this->belongsTo(Person::class);
     }
+
     public function company()
     {
         $this->belongsTo(Company::class);
     }
+
     public function business_type()
     {
         $this->belongsTo(BusinessType::class);
+    }
+
+    public function contracts()
+    {
+        $this->hasMany(Contract::class);
     }
 }

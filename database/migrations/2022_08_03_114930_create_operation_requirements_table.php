@@ -13,6 +13,7 @@ class CreateOperationRequirementsTable extends Migration
      */
     public function up()
     {
+        // TRAMITES
         Schema::create('operation_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('name');

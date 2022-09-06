@@ -16,6 +16,7 @@ class CreateKindPeopleTable extends Migration
         Schema::create('kind_people', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('spanish_name');
             // OWNER, CONTACT, REPRE LEGAL, MANAGER
 
             $table->bigInteger('created_by')->unsigned()->index();

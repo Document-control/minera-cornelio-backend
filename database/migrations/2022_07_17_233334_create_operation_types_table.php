@@ -13,11 +13,11 @@ class CreateOperationTypesTable extends Migration
      */
     public function up()
     {
+        // TIPO DE EXPLOTACIÓN
         Schema::create('operation_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-
-            $table->foreignId('client_id')->constrained('clients');
+            $table->text('description')->nullable();
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

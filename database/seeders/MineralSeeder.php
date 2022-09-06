@@ -39,7 +39,7 @@ class MineralSeeder extends Seeder
 
 
         foreach ($data as $key => $value) {
-            Mineral::created([
+            Mineral::create([
                 'name' => $value['name'],
                 'chemical_element' => $value['chemical_element'],
                 'created_by' => 1,

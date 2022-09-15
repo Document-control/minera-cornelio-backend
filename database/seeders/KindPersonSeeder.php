@@ -16,16 +16,16 @@ class KindPersonSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'OWNER',
-                'spanish_name' => 'DUEÑO',
+                'name' => 'owner',
+                'spanish_name' => 'dueño',
             ],
             [
-                'name' => 'LEGAL REPRESENTATIVE',
-                'spanish_name' => 'REPRESENTANTE LEGAL',
+                'name' => 'legal representative',
+                'spanish_name' => 'representante legal',
             ],
             [
-                'name' => 'DIRECT CONTACT',
-                'spanish_name' => 'CONTACTO DIRECTO',
+                'name' => 'direct contact',
+                'spanish_name' => 'contacto directo',
             ],
         ];
 

@@ -9,9 +9,17 @@ use App\Models\District;
 use App\Models\KindPerson;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Services\SiteSession;
 
 class ClientController extends Controller
 {
+
+    public $dniService;
+
+    public function __construct(SiteSession $service)
+    {
+        $this->dniService = $service;
+    }
     public function getBusinessType()
     {
         $data = BusinessType::all();
@@ -19,9 +27,7 @@ class ClientController extends Controller
     }
     public function getKingOfPeople()
     {
-        return response()->json([
-            'king_persons' => KindPerson::all()
-        ]);
+        return response()->json(KindPerson::all());
     }
     public function getInfoToAddress()
     {
@@ -30,5 +36,9 @@ class ClientController extends Controller
             'districts' => District::orderBy('name', 'ASC')->get(),
             'provinces' => Province::orderBy('name', 'ASC')->get(),
         ]);
+    }
+    public function getInfoFromDni(Request $request)
+    {
+        return $this->dniService->get_name($request->nro_doc);
     }
 }

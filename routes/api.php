@@ -23,6 +23,7 @@ Route::prefix('clients')->group(function () {
     Route::get('/business-type',          [ClientController::class, 'getBusinessType']);
     Route::get('/king-of-people',         [ClientController::class, 'getKingOfPeople']);
     Route::get('/get-info-to-address',    [ClientController::class, 'getInfoToAddress']);
+    Route::get('/get-info-from-dni',     [ClientController::class, 'getInfoFromDni']);
     // Route::post('/create',      [SaleController::class, 'create']);
     // Route::get('/{id}',         [SaleController::class, 'show']);
     // Route::put('/update/{id}',  [SaleController::class, 'update']);

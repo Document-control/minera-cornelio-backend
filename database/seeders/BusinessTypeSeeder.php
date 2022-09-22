@@ -16,12 +16,12 @@ class BusinessTypeSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Mineral en Grosa',
+                'name' => 'Mineral en Broza',
                 'code' => 'Brz',
                 'many_minerals' => true,
             ],
             [
-                'name' => 'Concentrado de cliente',
+                'name' => 'Venta de Concentrado',
                 'code' => 'Cc',
                 'many_minerals' => false,
                 // TODO: considerar para 'has_valorization' => true,

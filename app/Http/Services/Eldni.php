@@ -58,7 +58,7 @@ class XHR
         ];
     }
 }
-final class SiteSession
+final class Eldni
 {
     public $laravel_session = null;
     public $body_token = null;

@@ -9,16 +9,20 @@ use App\Models\District;
 use App\Models\KindPerson;
 use App\Models\Province;
 use Illuminate\Http\Request;
-use App\Http\Services\SiteSession;
+use App\Http\Services\Eldni;
 
 class ClientController extends Controller
 {
 
     public $dniService;
 
-    public function __construct(SiteSession $service)
+    public function __construct(Eldni $service)
     {
         $this->dniService = $service;
+    }
+    public function save()
+    {
+        return 'hola nuevo cliente';
     }
     public function getBusinessType()
     {
@@ -39,6 +43,7 @@ class ClientController extends Controller
     }
     public function getInfoFromDni(Request $request)
     {
-        return $this->dniService->get_name($request->nro_doc);
+        $data = collect($this->dniService->get_name($request->nro_doc))->values();
+        return $data;
     }
 }

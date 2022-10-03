@@ -44,8 +44,21 @@ class ClientController extends Controller
     }
     public function getInfoFromDni(Request $request)
     {
-        // $data = collect($this->dniService->get_name($request->nro_doc))->values();
-        $token = 'apis-token-2916.R0BrPlBD2-xz2HNYFQ1O4SxbwWJ2zqxP';
+        // $data = [
+        //     'document' => $request->nro_doc
+        // ];
+
+        // if ($request->user) {
+        //     Validator::make($data, [
+        //         'document' => 'required|max:255|unique:users,document,' . $request->nIdCliente
+        //     ])->validate();
+        // } else {
+        //     Validator::make($data, [
+        //         'document' => 'required|max:255|unique:customers,document,' . $request->nIdCliente
+        //     ])->validate();
+        // }
+
+        $token = env('TOKEN_APIS_NET');
         $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
         $parameters = [
             'http_errors' => false,
@@ -58,14 +71,26 @@ class ClientController extends Controller
             ],
             'query' => ['numero' => $request->nro_doc]
         ];
-        // return $parameters;
-        $res = $client->request('GET', '/v1/dni', $parameters);
-        $resp = json_decode($res->getBody()->getContents(), true);
-        return response()->json($resp, 200);
+
+        try {
+            $res = $client->request('GET', '/v1/dni', $parameters);
+            $resp = json_decode($res->getBody()->getContents(), true);
+            if (isset($resp)) {
+                $data = [
+                    'names' => ucwords(strtolower($resp['nombres'])),
+                    'last_names' => ucwords(strtolower($resp['apellidoPaterno'] . ' ' . $resp['apellidoMaterno']))
+                ];
+                return response()->json($data, 200);
+            } else {
+                return response()->json('Los caracteres ingresados no son correctos', 404);
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
     public function getInfoRuc(Request $request)
     {
-        $token = 'apis-token-2916.R0BrPlBD2-xz2HNYFQ1O4SxbwWJ2zqxP';
+        $token = env('TOKEN_APIS_NET');
 
         $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
 

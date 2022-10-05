@@ -17,7 +17,7 @@ class KindPersonSeeder extends Seeder
         $data = [
             [
                 'name' => 'owner',
-                'spanish_name' => 'dueño',
+                'spanish_name' => 'gerente general',
             ],
             [
                 'name' => 'legal representative',

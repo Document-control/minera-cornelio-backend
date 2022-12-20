@@ -11,10 +11,10 @@ class buninessMineral extends Model
 
     public function business_type()
     {
-        $this->belongsTo(BusinessType::class);
+        return $this->belongsTo(BusinessType::class);
     }
     public function mineral()
     {
-        $this->belongsTo(Mineral::class);
+        return $this->belongsTo(Mineral::class);
     }
 }

@@ -9,31 +9,32 @@ class Client extends Model
 {
     use HasFactory;
 
-    const NATURAL = 1;
-    const COMPANY = 2;
-
-    const ANULADO = 1;
-    const VIGENTE = 2;
-    const PENDIENTE = 3;
-    const INACTIVO = 4;
+    // const NATURAL = 1;
+    // const COMPANY = 2;
+    // const HARVESTER = 3; // ACOPIADOR
 
     public function person()
     {
-        $this->belongsTo(Person::class);
+        return $this->belongsTo(Person::class);
     }
 
     public function company()
     {
-        $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function business_type()
     {
-        $this->belongsTo(BusinessType::class);
+        return $this->belongsTo(BusinessType::class);
     }
 
     public function contracts()
     {
-        $this->hasMany(Contract::class);
+        return $this->hasMany(Contract::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(ClientStatus::class, 'status_id', 'id');
     }
 }

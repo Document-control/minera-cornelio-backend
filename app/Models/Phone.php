@@ -11,10 +11,10 @@ class Phone extends Model
 
     public function company()
     {
-        $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
     public function person()
     {
-        $this->belongsTo(Person::class);
+        return $this->belongsTo(Person::class);
     }
 }

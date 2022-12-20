@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\ClientController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\Settings\ProfileController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,20 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::prefix('clients')->group(function () {
-    Route::post('/save',                  [ClientController::class, 'save']);
-    Route::get('/business-type',          [ClientController::class, 'getBusinessType']);
-    Route::get('/king-of-people',         [ClientController::class, 'getKingOfPeople']);
-    Route::get('/get-info-to-address',    [ClientController::class, 'getInfoToAddress']);
-    Route::get('/get-info-from-dni',      [ClientController::class, 'getInfoFromDni']);
-    Route::get('/get-info-ruc',           [ClientController::class, 'getInfoRuc']);
-    // Route::post('/create',      [SaleController::class, 'create']);
-    // Route::get('/{id}',         [SaleController::class, 'show']);
-    // Route::put('/update/{id}',  [SaleController::class, 'update']);
-    // Route::patch('/update',     [SaleController::class, 'updateSales']);
-    // Route::delete('/{id}',      [SaleController::class, 'destroy']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout',         [AuthController::class, 'logout']);
+    Route::prefix('clients')->group(function () {
+        Route::post('/save',                  [ClientController::class, 'save']);
+        Route::get('/business-type',          [ClientController::class, 'getBusinessType']);
+        Route::get('/king-of-people',         [ClientController::class, 'getKingOfPeople']);
+        Route::get('/get-info-to-address',    [ClientController::class, 'getInfoToAddress']);
+        Route::get('/get-info-from-dni',      [ClientController::class, 'getInfoFromDni']);
+        Route::get('/get-info-ruc',           [ClientController::class, 'getInfoRuc']);
+        // Route::post('/create',      [SaleController::class, 'create']);
+        // Route::get('/{id}',         [SaleController::class, 'show']);
+        // Route::put('/update/{id}',  [SaleController::class, 'update']);
+        // Route::patch('/update',     [SaleController::class, 'updateSales']);
+        // Route::delete('/{id}',      [SaleController::class, 'destroy']);
+    });
+
+
+    Route::prefix('settings')->group(function () {
+        Route::prefix('profiles')->group(function () {
+            Route::get('/',      [ProfileController::class, 'index']);
+            Route::post('/{id}', [ProfileController::class, 'update']);
+        });
+    });
 });

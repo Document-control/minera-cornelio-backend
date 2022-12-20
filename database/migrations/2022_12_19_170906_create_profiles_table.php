@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Contract;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContractsTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +13,12 @@ class CreateContractsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-
-            $table->foreignId('status_id')->constrained('contract_status');
-            $table->foreignId('client_id')->constrained();
-
-            $table->string('start_date');
-            $table->string('end_date');
-
+            $table->string('ruc', 11);
+            $table->string('social_reason');
+            $table->string('commercial_name');
+            $table->foreignId('address_id')->constrained('addresses');
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();
@@ -39,6 +34,6 @@ class CreateContractsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('profile');
     }
 }

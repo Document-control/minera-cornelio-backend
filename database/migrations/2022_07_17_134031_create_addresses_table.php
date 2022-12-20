@@ -19,10 +19,7 @@ class CreateAddressesTable extends Migration
             $table->string('department');
             $table->string('district');
             $table->string('province');
-            $table->boolean('main');
-
-            $table->foreignId('person_id')->nullable()->constrained('people');
-            $table->foreignId('company_id')->nullable()->constrained();
+            $table->boolean('main')->default(true);
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

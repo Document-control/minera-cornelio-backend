@@ -15,18 +15,18 @@ class Person extends Model
 
     public function client()
     {
-        $this->hasOne(Client::class);
+        return $this->hasOne(Client::class);
     }
     public function emails()
     {
-        $this->hasMany(Email::class);
+        return $this->hasMany(Email::class);
     }
     public function phones()
     {
-        $this->hasMany(Phone::class);
+        return $this->hasMany(Phone::class);
     }
     public function kind_person()
     {
-        $this->belongsTo(KindPerson::class);
+        return $this->belongsTo(KindPerson::class);
     }
 }

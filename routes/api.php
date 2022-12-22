@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\Settings\ProfileController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Settings\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('profiles')->group(function () {
             Route::get('/',      [ProfileController::class, 'index']);
             Route::post('/{id}', [ProfileController::class, 'update']);
+        });
+        Route::prefix('documents')->group(function () {
+            Route::get('/',      [DocumentController::class, 'index']);
+            Route::post('/',     [DocumentController::class, 'store']);
+            Route::post('/{id}', [DocumentController::class, 'update']);
         });
     });
 });

@@ -15,9 +15,9 @@ class ClientStatusSeeder extends Seeder
     public function run()
     {
         ClientStatus::create(['name' => 'ANULADO']);
-        ClientStatus::create(['name' => 'PENDIENTE']);
-        ClientStatus::create(['name' => 'SEGUIMIENTO']);
-        ClientStatus::create(['name' => 'VIGENTE']);
-        ClientStatus::create(['name' => 'INACTIVO']);
+        ClientStatus::create(['name' => 'ACTIVO']);   // CON CONTRATO
+        ClientStatus::create(['name' => 'INACTIVO']); // SIN CONTRATO, CONTRATO VENCIDO
+
+        // TODO: HACER UN JOB Para cambiar el estado del cliente segun la fecha de vencimiento del contrato
     }
 }

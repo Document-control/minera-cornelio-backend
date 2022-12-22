@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperationTypesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateOperationTypesTable extends Migration
      */
     public function up()
     {
-        // TIPO DE EXPLOTACIÓN
-        Schema::create('operation_types', function (Blueprint $table) {
+        Schema::create('history_doc_clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-
-            $table->bigInteger('created_by')->unsigned()->index();
-            $table->bigInteger('updated_by')->unsigned()->index();
+            
+            $table->foreignId('contracts_id')->constrained('contracts');
+            $table->foreignId('doc_client_id')->constrained('document_clients');
 
             $table->timestamps();
         });
@@ -33,6 +30,6 @@ class CreateOperationTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operation_types');
+        Schema::dropIfExists('history_doc_clients');
     }
-}
+};

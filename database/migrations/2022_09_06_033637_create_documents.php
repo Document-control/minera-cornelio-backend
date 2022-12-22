@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperationRequirementsTable extends Migration
+class CreateDocuments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateOperationRequirementsTable extends Migration
      */
     public function up()
     {
-        // TRAMITES
-        Schema::create('operation_requirements', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
-            $table->text('description');
+
+            $table->bigInteger('created_by')->unsigned()->index();
+            $table->bigInteger('updated_by')->unsigned()->index();
+
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateOperationRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operation_requirements');
+        Schema::dropIfExists('documents');
     }
 }

@@ -12,6 +12,14 @@ class Email extends Model
     const PERSONAL = 1;
     const CORPORATIVE = 2;
 
+    protected $fillable = [
+        'name',
+        'type',
+        'main',
+        'created_by',
+        'updated_by'
+    ];
+
     public function company()
     {
         $this->belongsTo(Company::class);

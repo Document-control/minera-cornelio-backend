@@ -10,20 +10,120 @@ use App\Models\KindPerson;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Http\Services\Eldni;
-use GuzzleHttp\Client;
+use App\Models\Address;
+use App\Models\Client;
+use App\Models\Company;
+use App\Models\Email;
+use App\Models\Person;
+use App\Models\Phone;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
 
-    public $dniService;
+    // public $dniService;
 
-    public function __construct(Eldni $service)
-    {
-        $this->dniService = $service;
+    // public function __construct(Eldni $service)
+    // {
+    //     $this->dniService = $service;
+    // }
+
+    public function index() {
+        $clients = Client::orderBy('id', 'DESC')->get();
+
+        return response()->json(compact('clients'));
     }
-    public function save()
+
+    public function save(Request $request)
     {
-        return 'hola nuevo cliente';
+
+        DB::beginTransaction();
+        try {
+
+            $iniciales = $request->commercial_name;
+            $year = date('Y');
+
+            $code = $year . 'CLI-';
+
+            foreach (explode(" ", $iniciales) as $key => $value) {
+                $code .= substr($value, 0, 2);
+            }
+
+
+            $address = Address::create([
+                'direction' => $request->address,
+                'department' => $request->department_id,
+                'district' => $request->district_id,
+                'province' => $request->province_id,
+                'reference' => $request->reference,
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            $company = Company::create([
+                'social_reason' => $request->social_reason,
+                'commercial_name' => $request->commercial_name,
+                'address_id' => $address->id,
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            $people = collect([]);
+
+            foreach ($request->persons as $key => $value) {
+
+                $person = Person::create([
+                    'name' => $value["name"],
+                    'last_name' => $value["last_name"],
+                    'kind_person_id' => $value['kind_of'],
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                Phone::create([
+                    'phone_number' => $value['phone'],
+                    'person_id' => $person->id,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                Email::create([
+                    'name' => $value['email'],
+                    'person_id' => $person->id,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                $people->push($person);
+            }
+
+            $client = Client::create([
+                'ruc' => $request->ruc,
+                'status_id' => 2,
+                'code' =>  strtoupper($code),
+                'is_harvester' => $request->isHarvester,
+                'note' => $request->notes,
+                'person_id' => $people->firstWhere('kind_person_id', '=', 1)->id,
+                'company_id' => $company->id,
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            $client->business_types()->attach($request->arrTypeBusiness);
+
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'cliente creado correctamente'
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
     }
     public function getBusinessType()
     {

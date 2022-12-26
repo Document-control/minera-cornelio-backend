@@ -9,6 +9,15 @@ class Phone extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'phone_number',
+        'main',
+        'person_id',
+        'company_id',
+        'created_by',
+        'updated_by'
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);

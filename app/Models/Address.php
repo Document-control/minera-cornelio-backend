@@ -14,6 +14,7 @@ class Address extends Model
         'department',
         'district',
         'province',
+        'reference',
         'main',
         'created_by',
         'updated_by'

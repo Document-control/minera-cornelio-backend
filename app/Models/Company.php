@@ -9,6 +9,14 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'social_reason',
+        'commercial_name',
+        'address_id',
+        'created_by',
+        'updated_by',
+    ];
+
     public function client()
     {
         return $this->hasOne(Client::class);

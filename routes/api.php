@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\Settings\DocumentController;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assigned the "api" middleware group. Enjoy bu  ilding your API!
 |
 */
 
@@ -42,9 +42,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/{id}', [ProfileController::class, 'update']);
         });
         Route::prefix('documents')->group(function () {
-            Route::get('/',      [DocumentController::class, 'index']);
-            Route::post('/',     [DocumentController::class, 'store']);
-            Route::post('/{id}', [DocumentController::class, 'update']);
+            Route::get('/',         [DocumentController::class, 'index']);
+            Route::get('/{id}',     [DocumentController::class, 'show']);
+            Route::post('/',        [DocumentController::class, 'store']);
+            Route::put('/{id}',     [DocumentController::class, 'update']);
+            Route::delete('/{id}',  [DocumentController::class, 'destroy']);
         });
     });
 });

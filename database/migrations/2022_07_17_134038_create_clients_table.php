@@ -19,10 +19,10 @@ class CreateClientsTable extends Migration
             $table->string('ruc', 11);
             $table->string('code'); // INICIALES DE LA EMPRESA O DE LA PERSONA.
             $table->boolean('is_harvester')->default(false);
-            $table->foreignId('status_id')->constrained('client_status');
+            $table->text('note');
+            $table->foreignId('status_id')->constrained('client_status')->default(2); // ACTIVO
             $table->foreignId('person_id')->constrained('people');
             $table->foreignId('company_id')->nullable()->constrained('companies');
-            $table->foreignId('business_type_id')->nullable()->constrained('business_types');
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

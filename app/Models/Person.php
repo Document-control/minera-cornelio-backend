@@ -9,9 +9,14 @@ class Person extends Model
 {
     use HasFactory;
 
-    const OWNER = 1;
-    const CONTACT = 2;
-    const LEGAL_REPRESENTATIVE = 3;
+    protected $fillable = [
+        'name',
+        'last_name',
+        'kind_person_id',
+        'address_id',
+        'created_by',
+        'updated_by',
+    ];
 
     public function client()
     {

@@ -13,16 +13,18 @@ class CreateEmailsTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type', [Email::PERSONAL, Email::CORPORATIVE])->default(Email::PERSONAL);
-            $table->boolean('main');
-
+            $table->enum('type', [Email::PERSONAL, Email::CORPORATIVE])->default(Email::CORPORATIVE);
+            $table->boolean('main')->default(true);
 
             $table->foreignId('person_id')->nullable()->constrained('people');
             $table->foreignId('company_id')->nullable()->constrained();
+
+            $table->bigInteger('created_by')->unsigned()->index();
+            $table->bigInteger('updated_by')->unsigned()->index();
 
             $table->timestamps();
         });

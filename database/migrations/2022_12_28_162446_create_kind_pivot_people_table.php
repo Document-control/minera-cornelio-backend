@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBusinessClientsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBusinessClientsTable extends Migration
      */
     public function up()
     {
-        // TODO: AÑADIR TABLA DE TIPO DE NEGOCIO
-        Schema::create('business_clients', function (Blueprint $table) {
+        Schema::create('kind_pivot_people', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('client_id')->constrained();
-            $table->foreignId('business_type_id')->constrained('business_types');
+            $table->foreignId('person_id')->constrained('people');
+            $table->foreignId('kind_person_id')->constrained('kind_people');
 
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateBusinessClientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_mineral');
+        Schema::dropIfExists('kind_pivot_people');
     }
-}
+};

@@ -21,7 +21,8 @@ class CreateEmailsTable extends Migration
             $table->boolean('main')->default(true);
 
             $table->foreignId('person_id')->nullable()->constrained('people');
-            $table->foreignId('company_id')->nullable()->constrained();
+            $table->foreignId('client_id')->nullable()->constrained();
+            $table->foreignId('profile_id')->nullable()->constrained();
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

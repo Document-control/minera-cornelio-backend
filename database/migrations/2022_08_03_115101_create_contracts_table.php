@@ -19,6 +19,7 @@ class CreateContractsTable extends Migration
             $table->string('code');
 
             $table->foreignId('status_id')->constrained('contract_status');
+            $table->foreignId('type_id')->constrained('contract_types');
             $table->foreignId('client_id')->constrained();
             $table->foreignId('profile_id')->constrained('profiles');
 

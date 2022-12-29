@@ -18,7 +18,6 @@ class CreateProfilesTable extends Migration
             $table->string('ruc', 11);
             $table->string('social_reason');
             $table->string('commercial_name');
-            $table->foreignId('address_id')->constrained('addresses');
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

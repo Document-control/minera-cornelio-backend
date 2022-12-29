@@ -16,6 +16,7 @@ use App\Models\Company;
 use App\Models\Email;
 use App\Models\Person;
 use App\Models\Phone;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
@@ -28,7 +29,8 @@ class ClientController extends Controller
     //     $this->dniService = $service;
     // }
 
-    public function index() {
+    public function index(Request $request)
+    {
         $clients = Client::orderBy('id', 'DESC')->get();
 
         return response()->json(compact('clients'));
@@ -43,12 +45,17 @@ class ClientController extends Controller
             $iniciales = $request->commercial_name;
             $year = date('Y');
 
-            $code = $year . 'CLI-';
+            $code = $year;
+
+            $bts = BusinessType::whereIn('id', $request->arrTypeBusiness)->get();
 
             foreach (explode(" ", $iniciales) as $key => $value) {
                 $code .= substr($value, 0, 2);
             }
 
+            foreach ($bts as $key => $bt) {
+                $code .= $bt->code;
+            }
 
             $address = Address::create([
                 'direction' => $request->address,
@@ -60,42 +67,43 @@ class ClientController extends Controller
                 'updated_by' => auth()->user()->id,
             ]);
 
-            $company = Company::create([
-                'social_reason' => $request->social_reason,
-                'commercial_name' => $request->commercial_name,
-                'address_id' => $address->id,
-                'created_by' => auth()->user()->id,
-                'updated_by' => auth()->user()->id,
-            ]);
+            // $company = Company::create([
+            //     'social_reason' => $request->social_reason,
+            //     'commercial_name' => $request->commercial_name,
+            //     'address_id' => $address->id,
+            //     'created_by' => auth()->user()->id,
+            //     'updated_by' => auth()->user()->id,
+            // ]);
 
             $people = collect([]);
 
-            foreach ($request->persons as $key => $value) {
+            // foreach ($request->persons as $key => $value) {
 
-                $person = Person::create([
-                    'name' => $value["name"],
-                    'last_name' => $value["last_name"],
-                    'kind_person_id' => $value['kind_of'],
-                    'created_by' => auth()->user()->id,
-                    'updated_by' => auth()->user()->id,
-                ]);
+            //     $person = Person::create(
+            //         ['name' => $value["name"]],
+            //         ['last_name' => $value["last_name"]],
+            //         ['created_by' => auth()->user()->id],
+            //         ['updated_by' => auth()->user()->id],
+            //     );
 
-                Phone::create([
-                    'phone_number' => $value['phone'],
-                    'person_id' => $person->id,
-                    'created_by' => auth()->user()->id,
-                    'updated_by' => auth()->user()->id,
-                ]);
+            //     $person->kind_people()->attach($value['kind_of']);
 
-                Email::create([
-                    'name' => $value['email'],
-                    'person_id' => $person->id,
-                    'created_by' => auth()->user()->id,
-                    'updated_by' => auth()->user()->id,
-                ]);
+            //     Phone::create([
+            //         'phone_number' => $value['phone'],
+            //         'person_id' => $person->id,
+            //         'created_by' => auth()->user()->id,
+            //         'updated_by' => auth()->user()->id,
+            //     ]);
 
-                $people->push($person);
-            }
+            //     Email::create([
+            //         'name' => $value['email'],
+            //         'person_id' => $person->id,
+            //         'created_by' => auth()->user()->id,
+            //         'updated_by' => auth()->user()->id,
+            //     ]);
+
+            //     $people->push($person);
+            // }
 
             $client = Client::create([
                 'ruc' => $request->ruc,
@@ -103,13 +111,12 @@ class ClientController extends Controller
                 'code' =>  strtoupper($code),
                 'is_harvester' => $request->isHarvester,
                 'note' => $request->notes,
-                'person_id' => $people->firstWhere('kind_person_id', '=', 1)->id,
                 'company_id' => $company->id,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
 
-            $client->business_types()->attach($request->arrTypeBusiness);
+            $client->business_types()->attach($bts);
 
             DB::commit();
             return response()->json([
@@ -159,7 +166,7 @@ class ClientController extends Controller
         // }
 
         $token = env('TOKEN_APIS_NET');
-        $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
+        $client = new GuzzleHttpClient(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
         $parameters = [
             'http_errors' => false,
             'connect_timeout' => 5,
@@ -192,7 +199,7 @@ class ClientController extends Controller
     {
         $token = env('TOKEN_APIS_NET');
 
-        $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
+        $client = new GuzzleHttpClient(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
 
         $parameters = [
             'http_errors' => false,

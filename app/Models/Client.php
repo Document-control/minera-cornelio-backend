@@ -15,25 +15,15 @@ class Client extends Model
 
     protected $fillable = [
         'ruc',
+        'social_reason',
+        'commercial_name',
         'code',
         'is_harvester',
         'note',
         'status_id',
-        'person_id',
-        'company_id',
         'created_by',
         'updated_by',
     ];
-
-    public function person()
-    {
-        return $this->belongsTo(Person::class);
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 
     public function contracts()
     {
@@ -43,6 +33,16 @@ class Client extends Model
     public function status()
     {
         return $this->belongsTo(ClientStatus::class, 'status_id', 'id');
+    }
+
+    public function emails()
+    {
+        return $this->hasMany(Email::class);
+    }
+
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
     }
 
     public function business_types()

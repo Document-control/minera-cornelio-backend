@@ -22,6 +22,10 @@ class CreateAddressesTable extends Migration
             $table->text('reference');
             $table->boolean('main')->default(true);
 
+            $table->foreignId('person_id')->nullable()->constrained('people');
+            $table->foreignId('profile_id')->nullable()->constrained('profiles');
+            $table->foreignId('client_id')->nullable()->constrained();
+
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();
 

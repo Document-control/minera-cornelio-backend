@@ -23,4 +23,9 @@ class Contract extends Model
     {
         return $this->belongsTo(ContractStatus::class, 'status_id', 'id');
     }
+
+    public function type()
+    {
+        return $this->belongsTo(ContractType::class, 'type_id', 'id');
+    }
 }

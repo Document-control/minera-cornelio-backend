@@ -39,20 +39,22 @@ class ProfileController extends Controller
         try {
             if ($id == 0) { // nuevo profile
 
-                $address = Address::create([
-                    'direction' => $request->address,
-                    'department' => $request->department_id,
-                    'province' => $request->province_id,
-                    'district' => $request->district_id,
-                    'created_by' => auth()->user()->id,
-                    'updated_by' => auth()->user()->id,
-                ]);
+
 
                 $profile = Profile::create([
                     'ruc' => $request->ruc,
                     'social_reason' => $request->social_reason,
                     'commercial_name' => $request->commercial_name,
-                    'address_id' => $address->id,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                Address::create([
+                    'direction' => $request->address,
+                    'department' => $request->department_id,
+                    'province' => $request->province_id,
+                    'district' => $request->district_id,
+                    'profile_id' => $profile->id,
                     'created_by' => auth()->user()->id,
                     'updated_by' => auth()->user()->id,
                 ]);
@@ -60,7 +62,7 @@ class ProfileController extends Controller
                 $profile = Profile::find($id);
 
                 if ($profile) {
-                    $profile->address->update([
+                    $profile->addresses->update([
                         'direction' => $request->address,
                         'department' => $request->department_id,
                         'province' => $request->province_id,

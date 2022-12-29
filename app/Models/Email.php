@@ -20,12 +20,19 @@ class Email extends Model
         'updated_by'
     ];
 
-    public function company()
+    public function client()
     {
-        $this->belongsTo(Company::class);
+        $this->belongsTo(Client::class);
     }
+    
     public function person()
     {
         $this->belongsTo(Person::class);
     }
+
+    public function profile()
+    {
+        $this->belongsTo(Profile::class);
+    }
+
 }

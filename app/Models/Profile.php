@@ -26,8 +26,18 @@ class Profile extends Model
 
     protected $with = ['address'];
 
-    public function address()
+    public function addresses()
     {
-        return $this->belongsTo(Address::class, 'address_id', 'id');
+        return $this->belongsTo(Address::class, 'profile_id', 'id');
+    }
+
+    public function people()
+    {
+        return $this->belongsTo(Person::class, 'person_id', 'id');
+    }
+
+    public function phones()
+    {
+        return $this->belongsTo(Phone::class, 'phone_id', 'id');
     }
 }

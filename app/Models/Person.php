@@ -12,7 +12,6 @@ class Person extends Model
     protected $fillable = [
         'name',
         'last_name',
-        'kind_person_id',
         'address_id',
         'created_by',
         'updated_by',
@@ -30,8 +29,8 @@ class Person extends Model
     {
         return $this->hasMany(Phone::class);
     }
-    public function kind_person()
+    public function kind_people()
     {
-        return $this->belongsTo(KindPerson::class);
+        return $this->belongsToMany(KindPerson::class, 'kind_pivot_people', 'person_id', 'kind_person_id');
     }
 }

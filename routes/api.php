@@ -21,7 +21,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',         [AuthController::class, 'logout']);
+    
     Route::prefix('clients')->group(function () {
+        Route::get('/',                  [ClientController::class, 'index']);
         Route::post('/save',                  [ClientController::class, 'save']);
         Route::get('/business-type',          [ClientController::class, 'getBusinessType']);
         Route::get('/king-of-people',         [ClientController::class, 'getKingOfPeople']);

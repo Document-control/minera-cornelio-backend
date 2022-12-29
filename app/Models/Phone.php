@@ -13,17 +13,24 @@ class Phone extends Model
         'phone_number',
         'main',
         'person_id',
-        'company_id',
+        'client_id',
+        'profile_id',
         'created_by',
         'updated_by'
     ];
 
-    public function company()
+    public function client()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Client::class);
     }
+
     public function person()
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
     }
 }

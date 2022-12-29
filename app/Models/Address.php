@@ -16,6 +16,9 @@ class Address extends Model
         'province',
         'reference',
         'main',
+        'person_id',
+        'client_id',
+        'profile_id',
         'created_by',
         'updated_by'
     ];
@@ -27,16 +30,16 @@ class Address extends Model
 
     public function person()
     {
-        return $this->hasOne(Person::class, 'address_id', 'id');
+        return $this->belongsTo(Person::class, 'person_id', 'id');
     }
 
-    public function company()
+    public function client()
     {
-        return $this->hasOne(Company::class, 'address_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'address_id', 'id');
+        return $this->belongsTo(Profile::class, 'profile_id', 'id');
     }
 }

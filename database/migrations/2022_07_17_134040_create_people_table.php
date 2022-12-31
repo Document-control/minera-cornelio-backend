@@ -19,6 +19,8 @@ class CreatePeopleTable extends Migration
             $table->string('doc_number', 10)->nullable();
             $table->string('last_name')->nullable();
 
+            $table->foreignId('client_id')->constrained();
+
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();
 

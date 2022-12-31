@@ -17,7 +17,7 @@ class CreateKindPeopleTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('spanish_name');
-            // OWNER, CONTACT, REPRE LEGAL, MANAGER
+            // OWNER, CONTACT, REPRE LEGAL, MANAGER 
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

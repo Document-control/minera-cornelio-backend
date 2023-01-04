@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BusinessTypeSeeder::class);
         $this->call(ClientStatusSeeder::class);
         $this->call(ContractStatusSeeder::class);
+        $this->call(ContractTypeSeeder::class);
+        $this->call(DocumentSeeder::class);
 
         // para los departamentos,
         $path = base_path() . '/ubigeo2016.sql';

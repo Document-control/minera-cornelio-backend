@@ -37,4 +37,13 @@ class Document extends Model
             set: fn ($value) => mb_strtoupper(trim($value), 'UTF-8'),
         );
     }
+
+    // Query scope
+
+    public function scopeName($query, $name)
+    {
+        if ($name) {
+            return $query->orWhere('name', 'LIKE', "%$name%");
+        }
+    }
 }

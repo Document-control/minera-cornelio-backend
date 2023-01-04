@@ -28,16 +28,17 @@ class Profile extends Model
 
     public function addresses()
     {
-        return $this->belongsTo(Address::class, 'profile_id', 'id');
+        return $this->hasMany(Address::class, 'profile_id', 'id');
     }
 
-    public function people()
-    {
-        return $this->belongsTo(Person::class, 'person_id', 'id');
-    }
+    // con hasThrough sale
+    // public function people()
+    // {
+    //     return $this->hasMany(Person::class, 'person_id', 'id');
+    // }
 
     public function phones()
     {
-        return $this->belongsTo(Phone::class, 'phone_id', 'id');
+        return $this->hasMany(Phone::class, 'phone_id', 'id');
     }
 }

@@ -11,6 +11,10 @@ class ContractType extends Model
 
     protected $table = "contract_types";
 
+    protected $fillable = [
+        'description'
+    ];
+
     public function contracts()
     {
         return $this->hasMany(Contract::class, 'type_id', 'id');

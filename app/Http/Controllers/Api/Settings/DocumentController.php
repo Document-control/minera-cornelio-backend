@@ -14,9 +14,11 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $documents = Document::orderBy('id', 'DESC')->get();
+        $documents = Document::query()->orderBy('id', 'DESC')
+            ->name($request->search)
+            ->paginate(2);
         return response()->json(compact('documents'));
     }
 

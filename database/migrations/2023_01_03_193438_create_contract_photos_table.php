@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('document_profiles', function (Blueprint $table) {
+        Schema::create('contract_photos', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('document_id')->constrained('documents');
-            $table->foreignId('profile_id')->constrained('profiles');
+            $table->string('name');
+            $table->string('slug');
+            $table->text('description');
+            $table->string('path');
+            $table->string('ext');
 
-            $table->bigInteger('created_by')->unsigned()->index();
-            $table->bigInteger('updated_by')->unsigned()->index();
+            $table->foreignId('contract_id')->constrained('contracts');
 
             $table->timestamps();
         });
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_profiles');
+        Schema::dropIfExists('contract_photos');
     }
 };

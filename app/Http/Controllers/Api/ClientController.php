@@ -21,27 +21,16 @@ use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
-
-    // public $dniService;
-
-    // public function __construct(Eldni $service)
-    // {
-    //     $this->dniService = $service;
-    // }
-
     public function index(Request $request)
     {
         $clients = Client::orderBy('id', 'DESC')->get();
-
         return response()->json(compact('clients'));
     }
 
     public function save(Request $request)
     {
-
         DB::beginTransaction();
         try {
-
             $iniciales = $request->commercial_name;
             $year = date('Y');
 
@@ -57,61 +46,63 @@ class ClientController extends Controller
                 $code .= $bt->code;
             }
 
-            $address = Address::create([
+            $client = Client::create([
+                'ruc' => $request->ruc,
+                'social_reason' => $request->social_reason,
+                'commercial_name' => $request->commercial_name,
+                'code' =>  strtoupper($code),
+                'status_id' => 2,
+                'is_harvester' => $request->isHarvester,
+                'note' => $request->notes,
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+            ]);
+
+            $people = collect([]);
+
+            $client_id = $client->id;
+
+            foreach ($request->persons as $key => $value) {
+
+                $person = Person::where('doc_number', $value['dni'])->first();
+
+                if (is_null($person)) {
+                    $person = Person::create([
+                        'name' => $value["name"],
+                        'last_name' => $value["last_name"],
+                        'doc_number' => $value["dni"],
+                        'client_id' => $client_id,
+                        'created_by' => auth()->user()->id,
+                        'updated_by' => auth()->user()->id,
+                    ]);
+                }
+
+                $person->kind_people()->attach($value['kind_of']);
+
+                Phone::create([
+                    'phone_number' => $value['phone'],
+                    'person_id' => $person->id,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                Email::create([
+                    'name' => $value['email'],
+                    'person_id' => $person->id,
+                    'created_by' => auth()->user()->id,
+                    'updated_by' => auth()->user()->id,
+                ]);
+
+                $people->push($person);
+            }
+
+            Address::create([
                 'direction' => $request->address,
                 'department' => $request->department_id,
                 'district' => $request->district_id,
                 'province' => $request->province_id,
                 'reference' => $request->reference,
-                'created_by' => auth()->user()->id,
-                'updated_by' => auth()->user()->id,
-            ]);
-
-            // $company = Company::create([
-            //     'social_reason' => $request->social_reason,
-            //     'commercial_name' => $request->commercial_name,
-            //     'address_id' => $address->id,
-            //     'created_by' => auth()->user()->id,
-            //     'updated_by' => auth()->user()->id,
-            // ]);
-
-            $people = collect([]);
-
-            // foreach ($request->persons as $key => $value) {
-
-            //     $person = Person::create(
-            //         ['name' => $value["name"]],
-            //         ['last_name' => $value["last_name"]],
-            //         ['created_by' => auth()->user()->id],
-            //         ['updated_by' => auth()->user()->id],
-            //     );
-
-            //     $person->kind_people()->attach($value['kind_of']);
-
-            //     Phone::create([
-            //         'phone_number' => $value['phone'],
-            //         'person_id' => $person->id,
-            //         'created_by' => auth()->user()->id,
-            //         'updated_by' => auth()->user()->id,
-            //     ]);
-
-            //     Email::create([
-            //         'name' => $value['email'],
-            //         'person_id' => $person->id,
-            //         'created_by' => auth()->user()->id,
-            //         'updated_by' => auth()->user()->id,
-            //     ]);
-
-            //     $people->push($person);
-            // }
-
-            $client = Client::create([
-                'ruc' => $request->ruc,
-                'status_id' => 2,
-                'code' =>  strtoupper($code),
-                'is_harvester' => $request->isHarvester,
-                'note' => $request->notes,
-                'company_id' => $company->id,
+                'client_id' => $client->id,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);

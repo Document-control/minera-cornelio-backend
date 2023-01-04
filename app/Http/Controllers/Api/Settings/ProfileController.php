@@ -38,9 +38,6 @@ class ProfileController extends Controller
 
         try {
             if ($id == 0) { // nuevo profile
-
-
-
                 $profile = Profile::create([
                     'ruc' => $request->ruc,
                     'social_reason' => $request->social_reason,
@@ -54,6 +51,7 @@ class ProfileController extends Controller
                     'department' => $request->department_id,
                     'province' => $request->province_id,
                     'district' => $request->district_id,
+                    'reference' => null,
                     'profile_id' => $profile->id,
                     'created_by' => auth()->user()->id,
                     'updated_by' => auth()->user()->id,

@@ -19,7 +19,7 @@ class CreateAddressesTable extends Migration
             $table->string('department');
             $table->string('district');
             $table->string('province');
-            $table->text('reference');
+            $table->text('reference')->nullable();
             $table->boolean('main')->default(true);
 
             $table->foreignId('person_id')->nullable()->constrained('people');

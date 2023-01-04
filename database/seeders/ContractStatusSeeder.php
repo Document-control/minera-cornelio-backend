@@ -15,9 +15,7 @@ class ContractStatusSeeder extends Seeder
     public function run()
     {
         ContractStatus::create(['name' => 'ANULADO']);
-        ContractStatus::create(['name' => 'PENDIENTE']); // BORRADOR
-        ContractStatus::create(['name' => 'OBSERVADO']);
-        ContractStatus::create(['name' => 'APROBADO']);
+        ContractStatus::create(['name' => 'PENDIENTE']);
         ContractStatus::create(['name' => 'VIGENTE']);
     }
 }

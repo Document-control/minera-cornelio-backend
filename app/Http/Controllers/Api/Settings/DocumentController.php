@@ -18,7 +18,7 @@ class DocumentController extends Controller
     {
         $documents = Document::query()->orderBy('id', 'DESC')
             ->name($request->search)
-            ->paginate(2);
+            ->paginate(15);
         return response()->json(compact('documents'));
     }
 

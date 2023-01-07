@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\Settings\ProfileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Settings\DocumentController;
+use App\Http\Controllers\Api\Settings\MineralController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',         [AuthController::class, 'logout']);
-    
+
     Route::prefix('clients')->group(function () {
         Route::get('/',                  [ClientController::class, 'index']);
         Route::post('/save',                  [ClientController::class, 'save']);
@@ -49,6 +50,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/',        [DocumentController::class, 'store']);
             Route::put('/{id}',     [DocumentController::class, 'update']);
             Route::delete('/{id}',  [DocumentController::class, 'destroy']);
+        });
+        Route::prefix('minerals')->group(function () {
+            Route::get('/',            [MineralController::class, 'index']);
+            // Route::get('/{id}',     [DocumentController::class, 'show']);
+            // Route::post('/',        [DocumentController::class, 'store']);
+            // Route::put('/{id}',     [DocumentController::class, 'update']);
+            // Route::delete('/{id}',  [DocumentController::class, 'destroy']);
         });
     });
 });

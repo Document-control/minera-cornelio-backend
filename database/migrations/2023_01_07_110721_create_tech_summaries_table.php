@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('trader_number');
             $table->decimal('amount_pen', 10, 2);
             $table->decimal('amount_acu', 10, 2)->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->foreignId('contract_id')->constrained();
             $table->foreignId('client_id')->constrained();

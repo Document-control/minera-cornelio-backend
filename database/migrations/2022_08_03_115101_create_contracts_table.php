@@ -17,15 +17,13 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->string('code');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->foreignId('status_id')->constrained('contract_status');
             $table->foreignId('type_id')->constrained('contract_types');
             $table->foreignId('client_id')->constrained();
             $table->foreignId('profile_id')->constrained('profiles');
-
-            $table->string('start_date');
-            $table->string('end_date');
-
 
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->index();

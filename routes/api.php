@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\Settings\ProfileController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DocumentByClientController;
 use App\Http\Controllers\Api\Settings\DocumentController;
 use App\Http\Controllers\Api\Settings\MineralController;
+use App\Models\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +26,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',         [AuthController::class, 'logout']);
 
     Route::prefix('clients')->group(function () {
-        Route::get('/',                  [ClientController::class, 'index']);
+        Route::get('/',                       [ClientController::class, 'index']);
+        Route::get('/{id}',                   [ClientController::class, 'show']);
         Route::post('/save',                  [ClientController::class, 'save']);
         Route::get('/business-type',          [ClientController::class, 'getBusinessType']);
         Route::get('/king-of-people',         [ClientController::class, 'getKingOfPeople']);
         Route::get('/get-info-to-address',    [ClientController::class, 'getInfoToAddress']);
         Route::get('/get-info-from-dni',      [ClientController::class, 'getInfoFromDni']);
         Route::get('/get-info-ruc',           [ClientController::class, 'getInfoRuc']);
+
+        // Route::get('/{id}/docs',                    [DocumentByClientController::class, 'index']);
+        // Route::post('/attach-docs',                     [DocumentByClientController::class, 'attachDocs']);
+        // Route::put('/{id}/docs-photos',             [DocumentByClientController::class, 'updatePhotos']);
         // Route::post('/create',      [SaleController::class, 'create']);
         // Route::get('/{id}',         [SaleController::class, 'show']);
         // Route::put('/update/{id}',  [SaleController::class, 'update']);
         // Route::patch('/update',     [SaleController::class, 'updateSales']);
         // Route::delete('/{id}',      [SaleController::class, 'destroy']);
+
     });
 
 

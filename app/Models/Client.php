@@ -9,10 +9,6 @@ class Client extends Model
 {
     use HasFactory;
 
-    // const NATURAL = 1;
-    // const COMPANY = 2;
-    // const HARVESTER = 3; // ACOPIADOR
-
     protected $fillable = [
         'ruc',
         'social_reason',
@@ -24,6 +20,11 @@ class Client extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function people()
+    {
+        return $this->hasMany(Person::class, 'client_id');
+    }
 
     public function contracts()
     {
@@ -53,5 +54,10 @@ class Client extends Model
     public function business_clients()
     {
         return $this->hasMany(BusinessClient::class, 'client_id', 'id');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'document_clients');
     }
 }

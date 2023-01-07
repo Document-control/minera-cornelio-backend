@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('nro')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('currency', 3)->default('PEN');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->text('description')->nullable();
 
             $table->timestamps();

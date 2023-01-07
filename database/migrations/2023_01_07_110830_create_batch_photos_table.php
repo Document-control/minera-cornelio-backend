@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('path');
             $table->string('ext');
             $table->text('description')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->foreignId('batch_id')->constrained();
 

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('path');
             $table->string('ext');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->foreignId('contract_id')->constrained('contracts');
 

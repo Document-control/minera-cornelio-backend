@@ -123,6 +123,19 @@ class ClientController extends Controller
             ]);
         }
     }
+
+    public function show(int $id)
+    {
+        $client = Client::where('id', $id)
+            ->with('documents')
+            ->with('contracts')
+            ->with('people')
+            ->first();
+        // encargados
+
+        return response()->json(compact('client'));
+    }
+
     public function getBusinessType()
     {
         $data = BusinessType::all();

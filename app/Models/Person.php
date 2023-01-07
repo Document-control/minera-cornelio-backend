@@ -18,9 +18,20 @@ class Person extends Model
         'updated_by',
     ];
 
+    protected $with = [
+        'emails',
+        'phones',
+        'addresses',
+        'kind_people'
+    ];
+
     public function client()
     {
-        return $this->hasOne(Client::class);
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'client_id');
     }
     public function emails()
     {

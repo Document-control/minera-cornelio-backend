@@ -15,8 +15,10 @@ class CreateDocumentClients extends Migration
     {
         Schema::create('document_clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->boolean('status')->default(true);
+            $table->string('description')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->foreignId('client_id')->constrained('clients');
             $table->foreignId('document_id')->constrained('documents');

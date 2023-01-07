@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contract_photos', function (Blueprint $table) {
+        Schema::create('detail_exp_couriers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->string('path');
-            $table->string('ext');
+            $table->string('plates');
+            $table->string('weight');
+            $table->decimal('total', 10, 2);
+            $table->string('currency', 3)->default('PEN');
 
-            $table->foreignId('contract_id')->constrained('contracts');
+            $table->foreignId('expense_id')->constrained();
+            $table->foreignId('courier_id')->constrained();
 
             $table->unsignedBigInteger('created_by')->index();
             $table->unsignedBigInteger('updated_by')->index();
+
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contract_photos');
+        Schema::dropIfExists('detail_exp_couriers');
     }
 };

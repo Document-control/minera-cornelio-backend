@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total', 10, 2);
-            $table->date('start_date');
+            $table->decimal('total', 10, 2)->default(0);
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('currency', 3)->default('PEN');
 

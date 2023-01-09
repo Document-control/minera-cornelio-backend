@@ -13,6 +13,8 @@ use App\Http\Services\Eldni;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Company;
+use App\Models\Contract;
+use App\Models\DocumentClient;
 use App\Models\Email;
 use App\Models\Person;
 use App\Models\Phone;
@@ -120,20 +122,31 @@ class ClientController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
-            ]);
+            ], 422);
         }
     }
 
     public function show(int $id)
     {
-        $client = Client::where('id', $id)
-            ->with('documents')
-            ->with('contracts')
-            ->with('people')
-            ->first();
-        // encargados
+        $client = Client::where('id', $id)->first();
 
-        return response()->json(compact('client'));
+        $documents = DocumentClient::where('client_id', $id)->with('photos')->get();
+        // ->with([
+        //     'photos', function ($query) {
+        //         return $query->path =  'https://' . env('AWS_BUCKET') . '.s3.amazonaws.com/' . $query->path;
+        //     }
+        // ])->get();
+
+        $contracts = Contract::where('client_id', $id)->orderBy('status_id', 'DESC')->get();
+
+        $people = Person::where('client_id', $id)->get();
+
+        return response()->json(compact(
+            'client',
+            'documents',
+            'contracts',
+            'people'
+        ));
     }
 
     public function getBusinessType()

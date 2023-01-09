@@ -56,6 +56,11 @@ class Client extends Model
         return $this->hasMany(BusinessClient::class, 'client_id', 'id');
     }
 
+    public function document_clients()
+    {
+        return $this->hasMany(DocumentClient::class, 'client_id');
+    }
+
     public function documents()
     {
         return $this->belongsToMany(Document::class, 'document_clients');

@@ -17,5 +17,6 @@ class ContractStatusSeeder extends Seeder
         ContractStatus::create(['name' => 'ANULADO']);
         ContractStatus::create(['name' => 'PENDIENTE']);
         ContractStatus::create(['name' => 'VIGENTE']);
+        ContractStatus::create(['name' => 'FINALIZADO']);
     }
 }

@@ -16,9 +16,14 @@ class DocumentController extends Controller
      */
     public function index(Request $request)
     {
-        $documents = Document::query()->orderBy('id', 'DESC')
-            ->name($request->search)
-            ->paginate(15);
+        if ($request->page > 0) {
+            $documents = Document::query()->orderBy('id', 'DESC')
+                ->name($request->search)
+                ->paginate(15);
+        } else {
+            $documents = Document::all();
+        }
+
         return response()->json(compact('documents'));
     }
 
@@ -98,7 +103,7 @@ class DocumentController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
-            ]);
+            ], 422);
         }
     }
 
@@ -129,7 +134,7 @@ class DocumentController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
-            ]);
+            ], 422);
         }
     }
 }

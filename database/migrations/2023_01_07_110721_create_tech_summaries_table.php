@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('tech_summaries', function (Blueprint $table) {
             $table->id();
-
             $table->integer('initial_month');
             $table->decimal('factory_tmh', 10, 2);
             $table->string('trader');
@@ -28,6 +27,9 @@ return new class extends Migration
             $table->foreignId('contract_id')->constrained();
             $table->foreignId('client_id')->constrained();
             $table->foreignId('factory_plant_id')->constrained('factory_plants');
+
+            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('updated_by')->index();
             $table->timestamps();
         });
     }

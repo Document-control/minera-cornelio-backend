@@ -88,7 +88,7 @@ class ProfileController extends Controller
             return response()->json([
                 'status' =>  false,
                 'message' => $th->getMessage()
-            ]);
+            ], 422);
         }
     }
 

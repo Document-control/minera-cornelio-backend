@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('weight');
             $table->decimal('total', 10, 2);
             $table->string('currency', 3)->default('PEN');
+            $table->date('start_date');
 
             $table->foreignId('expense_id')->constrained();
             $table->foreignId('courier_id')->constrained();

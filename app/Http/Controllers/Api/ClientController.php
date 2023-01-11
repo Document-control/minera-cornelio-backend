@@ -9,7 +9,6 @@ use App\Models\District;
 use App\Models\KindPerson;
 use App\Models\Province;
 use Illuminate\Http\Request;
-use App\Http\Services\Eldni;
 use App\Models\Address;
 use App\Models\Client;
 use App\Models\Company;
@@ -18,6 +17,7 @@ use App\Models\DocumentClient;
 use App\Models\Email;
 use App\Models\Person;
 use App\Models\Phone;
+use App\Services\GalleryDocsService;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\Facades\DB;
 
@@ -131,12 +131,13 @@ class ClientController extends Controller
         $client = Client::where('id', $id)->first();
 
         $documents = DocumentClient::where('client_id', $id)->with('photos')->get();
-        // ->with([
-        //     'photos', function ($query) {
-        //         return $query->path =  'https://' . env('AWS_BUCKET') . '.s3.amazonaws.com/' . $query->path;
-        //     }
-        // ])->get();
 
+
+        foreach ($documents as $document) {
+            foreach ($document->photos as $file) {
+                $file->path = (new GalleryDocsService())->getFiles($file->path);
+            }
+        }
         $contracts = Contract::where('client_id', $id)->orderBy('status_id', 'DESC')->get();
 
         $people = Person::where('client_id', $id)->get();
